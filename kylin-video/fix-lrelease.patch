@@ -1,0 +1,9 @@
+--- a/src/translations/generate_translations_pm.sh	
++++ b/src/translations/generate_translations_pm.sh
+@@ -4,5 +4,5 @@
+ 
+ for ts in "${ts_file_list[@]}"
+ do
+-	lrelease "${ts}"
++	/usr/lib64/qt5/bin/lrelease "${ts}"
+ done
