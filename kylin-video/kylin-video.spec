@@ -9,6 +9,7 @@ License:        LGPL-2.0-only and LGPL-2.1-only and GPL-2.0-only and LGPL-2.0-or
 URL:            https://www.ubuntukylin.com/applications/26-cn.html
 Source0:        https://github.com/UbuntuKylin/kylin-video/kylin-video-2.1.1.1.tar.gz
 Patch1:         fix-lrelease.patch
+Patch2:         adding-features.patch
 
 BuildRequires:  qt5-devel
 BuildRequires:  desktop-file-utils
@@ -67,6 +68,6 @@ cd %{_builddir}/%{name}-%{version}
 
 
 %changelog   
-* Fri Aug 20 2021 tongzong <2505108658@qq.com> - 2.1.1.1-1   
+* Fri Aug 20 2021 tongzong <2505108658@qq.com> - 2.1.1.1-1
 - package init
 

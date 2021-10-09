@@ -1,0 +1,85 @@
+--- a/src/mainwindow.cpp
++++ b/src/mainwindow.cpp
+@@ -1119,16 +1119,43 @@
+     subtitlesMenu = new QMenu(this);
+     subtitlesMenu->menuAction()->setText( tr("Subtitles") );
+ //    subtitlesMenuAct->setIcon(Images::icon("subtitles_menu"));
+-    loadSubsAct = new MyAction(this, "load_subs" );
++    loadSubsAct = new MyAction(Qt::SHIFT|Qt::CTRL| Qt::Key_L,this, "load_subs" );
+     connect(loadSubsAct, SIGNAL(triggered()), this, SLOT(loadSub()));
+     loadSubsAct->change(tr("Load..."));
++
++
++
+ //    subVisibilityAct = new MyAction(Qt::Key_V, this, "subtitle_visibility");
+-    subVisibilityAct = new MyAction(this, "sub_visibility");
++    subVisibilityAct = new MyAction(Qt::SHIFT|Qt::CTRL| Qt::Key_S,this, "sub_visibility");
+     subVisibilityAct->setCheckable(true);
+     connect(subVisibilityAct, SIGNAL(toggled(bool)), m_core, SLOT(changeSubVisibility(bool)));
+     subVisibilityAct->change(tr("Subtitle &visibility"));
+     subtitlesMenu->addAction(loadSubsAct);
+     subtitlesMenu->addAction(subVisibilityAct);
++
++
++
++
++    decSubScaleAct = new MyAction( Qt::SHIFT | Qt::Key_R, this, "dec_sub_scale" );
++	connect( decSubScaleAct, SIGNAL(triggered()),m_core, SLOT(decSubScale()) );
++    decSubScaleAct->change( tr("Dec_sub_scale") );
++    subtitlesMenu->addAction(decSubScaleAct);
++
++
++	incSubScaleAct = new MyAction( Qt::SHIFT | Qt::Key_T, this, "inc_sub_scale" );
++	connect( incSubScaleAct, SIGNAL(triggered()),m_core, SLOT(incSubScale()) );
++    incSubScaleAct->change( tr("Inc_sub_scale") );
++    subtitlesMenu->addAction(incSubScaleAct);
++
++	decSubStepAct = new MyAction( Qt::SHIFT|Qt::CTRL| Qt::Key_G, this, "dec_sub_step" );
++	connect( decSubStepAct, SIGNAL(triggered()),m_core, SLOT(decSubStep()) );
++    decSubStepAct->change( tr("Dec_sub_step") );
++    subtitlesMenu->addAction(decSubStepAct);
++
++	incSubStepAct = new MyAction( Qt::SHIFT|Qt::CTRL | Qt::Key_Y, this, "inc_sub_step" );
++	connect( incSubStepAct, SIGNAL(triggered()),m_core, SLOT(incSubStep()) );
++    incSubStepAct->change( tr("Inc_sub_step") );
++    subtitlesMenu->addAction(incSubStepAct);
+ }
+ 
+ void MainWindow::createOsdActionsAndMenus()
+
+
+
+--- a/src/mainwindow.h
++++ b/src/mainwindow.h
+@@ -395,7 +395,13 @@
+     QMenu *subtitlesMenu = nullptr;//字幕
+     MyAction * loadSubsAct = nullptr;
+     MyAction * subVisibilityAct = nullptr;
++    MyAction * decSubScaleAct = nullptr;
++    MyAction * incSubScaleAct = nullptr;
++    MyAction * decSubStepAct = nullptr;
++    MyAction * incSubStepAct = nullptr;
+ 
++
++    
+     MyAction *showPreferencesAct = nullptr;//设置
+     MyAction *showPropertiesAct = nullptr;//信息和属性
+     MyAction *aboutAct = nullptr;
+
+--- a/src/smplayer/core.cpp
++++ b/src/smplayer/core.cpp
+@@ -3345,12 +3345,12 @@
+ }
+ 
+ void Core::incSubStep() {
+-//	qDebug("Core::incSubStep");
++	qDebug("Core::incSubStep");
+ 	proc->setSubStep(+1);
+ }
+ 
+ void Core::decSubStep() {
+-//	qDebug("Core::decSubStep");
++	qDebug("Core::decSubStep");
+ 	proc->setSubStep(-1);
+ }
+ 
